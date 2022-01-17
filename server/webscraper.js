@@ -32,14 +32,14 @@ async function scrapePitchforkReviews(){
             await page.goto(url);
             const albums = await page.$$('.albumListRow')
             for(const ele of albums) {
-                const album_name = await ele.$eval('h2 > span > a', el => el.innerText)
-                const album_date = await ele.$eval('.albumListDate', el => el.innerText);
-                const album_score = await ele.$eval('.scoreValue', el => el.innerText);
+                const name = await ele.$eval('h2 > span > a', el => el.innerText)
+                const date = await ele.$eval('.albumListDate', el => el.innerText);
+                const score = await ele.$eval('.scoreValue', el => el.innerText);
                 
-                let album_cover = await ele.$eval('.albumListCover > a > img', el => el.getAttribute('data-src'))
-                album_cover = album_cover.replace('200x', '400x')
+                let cover = await ele.$eval('.albumListCover > a > img', el => el.getAttribute('data-src'))
+                cover = cover.replace('200x', '400x')
 
-                album_info.push({album_name, album_date, album_score, album_cover})
+                album_info.push({name, date, score, cover})
             }
             pageNumber++;
         }
@@ -53,7 +53,6 @@ async function scrapePitchforkReviews(){
 
 }
 
-scrapePitchforkReviews();
-// module.exports = {
-//     scrapePitchforkReviews
-// }
+module.exports = {
+    scrapePitchforkReviews
+}
