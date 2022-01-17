@@ -1,4 +1,4 @@
-const typeorm = request('typeorm')
+const typeorm = require('typeorm')
 
 const EntitySchema = require('typeorm').EntitySchema;
 
@@ -60,11 +60,29 @@ async function getScores(connection) {
     return albums;
 }
 
+// get initial 2 random albums
+async function getInitialAlbums(connection) {
+    const albumRepo = await connection.getRepository(Album);
+    const leftSideAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
+    const rightSideAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
+
+    connection.close();
+    return ({leftSideAlbum, rightSideAlbum});
+}
+
+async function getRandomAlbum(connection) {
+    const albumRepo = await connection.getRepository(Album);
+    const randomAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
+
+    connection.close();
+    return randomAlbum;
+}
+
 async function updateScores(data, connection) {
     const albumRepo = connection.getRepository(Album);
     let tempObject;
     for(let i = 0; i < data.length; i++){
-        tempObject = await albumRepo.find({where: {album: data[i].name}})
+        tempObject = await albumRepo.find({where: {name: data[i].name}})
         if(tempObject.length == 0){
             const album = new Album()
             album.name = data[i].name
@@ -85,10 +103,10 @@ async function updateScores(data, connection) {
 async function insertScores(data, connection) { 
     for(let d of data){
         const album = new Album()
-        album.album_name = d.album_name
-        album.album_date = d.album_date
-        album.album_score = d.album_score
-        album.album_cover = d.album_cover
+        album.name = d.name
+        album.date = d.date
+        album.score = d.score
+        album.cover = d.cover
 
         const albumRepo = connection.getRepository(Album);
         const res = await albumRepo.save(album);
@@ -104,5 +122,7 @@ module.exports = {
     getConnection,
     insertScores,
     getScores,
-    updateScores
+    updateScores,
+    getInitialAlbums,
+    getRandomAlbum
 }

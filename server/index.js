@@ -23,22 +23,25 @@ app.post('/api/updateScores', async(req, res) => {
 app.post('/api/insertScores', async(req, res) => {
     try {
         const connection = await db.getConnection();
-        const object = JSON.parse(JSON.stringify(await connection.query(`SELECT 1 FROM album LIMIT 1`)))
-        if(object.length == 0){
-            console.log("IN IF SECTION")
+            console.log("IN TRY SECTION")
             const getData =  await scraper.scrapePitchforkReviews(); 
-            
             const albums = await db.insertScores(getData, connection)
             res.send(albums)
-        }  
-        else{
-            console.log("IN ELSE STATEMENT")
-            const scrapeData = await db.getScores(connection);
-            res.send(scrapeData)
-        } 
     } catch(err) {
         console.log(err)
     }
+})
+
+app.get('/api/getInitialAlbums', async(req, res) => {
+    const connection = await db.getConnection();
+    const initialAlbums = await db.getInitialAlbums(connection);
+    res.send(initialAlbums);
+})
+
+app.get('/api/getRandomAlbum', async(req, res) => {
+    const connection = await db.getConnection();
+    const randomAlbum = await db.getRandomAlbum(connection);
+    res.send(randomAlbum);
 })
 
 const port = process.env.PORT || 3001;

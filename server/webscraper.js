@@ -19,7 +19,7 @@ async function scrapePitchforkReviews(){
 
         const page = await browser.newPage();
         let pageNumber = 1;
-        let url = `https://www.albumoftheyear.org/ratings/1-pitchfork-highest-rated/1999/${pageNumber}`
+        let url = `https://www.albumoftheyear.org/ratings/1-pitchfork-highest-rated/2020/${pageNumber}`
         
         await page.goto(url);
 
@@ -27,8 +27,23 @@ async function scrapePitchforkReviews(){
         const finalPageNum = await page.$$eval('.pageSelectSmall', el => el[el.length - 1].innerText)
         console.log(finalPageNum)
 
+        const albums = await page.$$('.albumListRow')
+        for(const ele of albums) {
+            const name = await ele.$eval('h2 > span > a', el => el.innerText)
+            const date = await ele.$eval('.albumListDate', el => el.innerText);
+            const score = await ele.$eval('.scoreValue', el => el.innerText);
+                
+            let cover = await ele.$eval('.albumListCover > a > img', el => el.getAttribute('data-src'))
+            cover = cover.replace('200x', '400x')
+
+            album_info.push({name, date, score, cover})
+        }
+        pageNumber++;
+
         while(pageNumber <= finalPageNum){
-            url = `https://www.albumoftheyear.org/ratings/1-pitchfork-highest-rated/1999/${pageNumber}`
+            url = `https://www.albumoftheyear.org/ratings/1-pitchfork-highest-rated/2020/${pageNumber}`
+            console.log(url)
+
             await page.goto(url);
             const albums = await page.$$('.albumListRow')
             for(const ele of albums) {
