@@ -63,9 +63,8 @@ async function getScores(connection) {
 // get initial 2 random albums
 async function getInitialAlbums(connection) {
     const albumRepo = await connection.getRepository(Album);
-    const leftSideAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
-    const rightSideAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
-
+    let leftSideAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
+    let rightSideAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
     connection.close();
     return ({leftSideAlbum, rightSideAlbum});
 }
