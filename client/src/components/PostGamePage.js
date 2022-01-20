@@ -16,7 +16,7 @@ const PostGamePage = () => {
                     style={{fontFamily: "Tiempos Headline", color: "white", fontSize: "2em", fontWeight: "600", margin: "auto"}}>
                 <h1>You Scored: {location.state.score}</h1>
                 <TwitterShareButton
-                    url={'[public site not created yet]'}
+                    url={'http://pitchforkgame.xyz/'}
                     options={{ text: 'Just played Higher or Lower Pitchfork Edition. Play it now'}}/>
                 <Link to={'/'} style={{textDecoration: "none"}}>
                     <button type="button" class="btn btn-dark rounded-pill" style={{margin: "auto"}}>Back to Home</button>
