@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom';
 import background from '../bg-image.jpg'
 
 const HomePage = () => {
-    return (
-        // style={{backgroundImage: `url(${background})`, height: "100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
-        
+    return (        
             <div>
                 <div style={{ position: "relative", width: "100%", height: "100vh", display: "flex", 
                             backgroundImage: `url(${background})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
@@ -23,22 +21,6 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-        
-        // <div class="text-center">
-        //     <h1 class="p-2">Higher Lower Game</h1>
-        //     <p class="p-2">A game of higher or lower based on Pitchfork scores</p>
-        //     <p class="p-2">Currently uses albums released in 2020 and 2021</p>
-        //     <Link to={'/game'} style={{textDecoration: "none"}}>
-        //         <button type="button" 
-        //             class="btn btn-success btn-lg p-2" 
-        //             style={{ margin: "auto"}}>
-        //             Start Game
-        //         </button>
-        //     </Link>
-        // </div>
-
-        
-            
     )
 }
 

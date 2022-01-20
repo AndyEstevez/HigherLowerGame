@@ -41,7 +41,7 @@ const GamePage = () => {
                 localStorage.setItem('HighScore', score);
             }
             let path = `/postgame`;
-            navigate(path);
+            navigate(path, { state: {score: score }});
         }
     }
 
