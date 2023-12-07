@@ -13,7 +13,7 @@ class Album {
 }
 
 const AlbumSchema = new EntitySchema({
-    name: "Album",
+    name: "album",
     target: Album,
     columns: {
         id: {
