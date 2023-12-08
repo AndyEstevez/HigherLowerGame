@@ -1,6 +1,5 @@
-const typeorm = require('typeorm')
-
-const EntitySchema = require('typeorm').EntitySchema;
+var typeorm = require('typeorm')
+var EntitySchema = require('typeorm').EntitySchema;
 
 class Album {
     constructor(id, name, date, score, cover){
@@ -37,7 +36,7 @@ const AlbumSchema = new EntitySchema({
 })
 
 async function getConnection() {
-    return await typeorm.createConnection({
+       return await typeorm.createConnection({
         type: "mysql",
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
@@ -53,7 +52,7 @@ async function getConnection() {
 }
 
 async function getScores(connection) {
-    const albumRepo = await connection.getRepository(Album)
+    const albumRepo = await connection.getRepository("Album")
     const albums = await albumRepo.find();
     
     connection.close();
@@ -65,6 +64,7 @@ async function getInitialAlbums(connection) {
     const albumRepo = await connection.getRepository(Album);
     let leftSideAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
     let rightSideAlbum = await albumRepo.createQueryBuilder('album').orderBy('RAND()').getOne();
+
     connection.close();
     return ({leftSideAlbum, rightSideAlbum});
 }

@@ -23,7 +23,6 @@ app.post('/api/updateScores', async(req, res) => {
 app.post('/api/insertScores', async(req, res) => {
     try {
         const connection = await db.getConnection();
-            console.log("IN TRY SECTION")
             const getData =  await scraper.scrapePitchforkReviews(); 
             const albums = await db.insertScores(getData, connection)
             res.send(albums)
